@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b3ulpabg806oy" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://c43u7jyywped" path="res://assets/sprites/world_tileset.png" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://dbi7e4k5gyc0d" path="res://scenes/platform.tscn" id="3_lnu2h"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 
@@ -168,6 +169,44 @@ texture = ExtResource("2_yqjtg")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_lnu2h")
 
+[sub_resource type="Animation" id="Animation_lnu2h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(276, 116)]
+}
+
+[sub_resource type="Animation" id="Animation_lbhrr"]
+resource_name = "move"
+length = 1.9
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(276, 116), Vector2(361, 80)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iywne"]
+_data = {
+&"RESET": SubResource("Animation_lnu2h"),
+&"move": SubResource("Animation_lbhrr")
+}
+
 [node name="Game" type="Node2D" unique_id=2073773186]
 
 [node name="Player" parent="." unique_id=820864138 instance=ExtResource("1_uwrxv")]
@@ -180,9 +219,18 @@ zoom = Vector2(4, 4)
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1520321442]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=804782233]
-position = Vector2(44, 57)
+position = Vector2(42, 66)
 shape = SubResource("WorldBoundaryShape2D_uwrxv")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=431927399]
 tile_map_data = PackedByteArray("AAD9/wUAAAAAAAEAAAD+/wUAAAAAAAEAAAD//wUAAAAAAAEAAAD9/wQAAAAAAAAAAAD+/wQAAAAAAAAAAAD//wQAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAADAAQAAAAAAAAAAAACAAQAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAJAAAAAAAMAAcAAAALAAAAAAALAAcAAAAKAAAAAAANAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAUAAAABAAAAAAABAAUAAAABAAAAAAACAAUAAAABAAAAAAADAAUAAAABAAAAAAADAAYAAAABAAAAAAACAAYAAAABAAAAAAABAAYAAAABAAAAAAAAAAYAAAABAAAAAAAAAAcAAAABAAAAAAABAAcAAAABAAAAAAACAAcAAAABAAAAAAADAAcAAAABAAAAAAAEAAcAAAAHAAAAAAAFAAcAAAAHAAAAAAAGAAcAAAAHAAAAAAAGAAgAAAAHAAAAAAAEAAgAAAAHAAAAAAAFAAgAAAAHAAAAAAD9/wYAAAAAAAEAAAD9/wcAAAAAAAEAAAD+/wcAAAAAAAEAAAD+/wYAAAAAAAEAAAD//wYAAAAAAAEAAAD//wcAAAAAAAEAAAD9/wgAAAAAAAEAAAD+/wgAAAAAAAEAAAD//wgAAAAAAAEAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAACAAgAAAABAAAAAAADAAgAAAABAAAAAAAHAAgAAAAIAAAAAAAIAAgAAAAIAAAAAAAJAAgAAAAIAAAAAAANAAgAAAAIAAAAAAAOAAgAAAAIAAAAAAAPAAgAAAAIAAAAAAA=")
 tile_set = SubResource("TileSet_lbhrr")
+
+[node name="Platform" parent="." unique_id=1785505709 instance=ExtResource("3_lnu2h")]
+position = Vector2(-25, 33)
+
+[node name="Platform2" parent="." unique_id=1342900777 instance=ExtResource("3_lnu2h")]
+position = Vector2(276, 116)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Platform2" unique_id=893361745]
+libraries/ = SubResource("AnimationLibrary_iywne")
