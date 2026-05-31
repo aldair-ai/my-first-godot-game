@@ -49,10 +49,16 @@ script = ExtResource("1_n6pvg")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=377611152]
 sprite_frames = SubResource("SpriteFrames_v5wyi")
 autoplay = "default"
-frame_progress = 0.8267836
+frame_progress = 0.06164048
 
 [node name="Killzone" parent="AnimatedSprite2D" unique_id=1069208296 instance=ExtResource("2_n6pvg")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Killzone" unique_id=2144531662]
 position = Vector2(1.125, 1.5)
 shape = SubResource("RectangleShape2D_0l8pv")
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=195252955]
+target_position = Vector2(18, 1)
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1322592241]
+target_position = Vector2(-17, 1)
