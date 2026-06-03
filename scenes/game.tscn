@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dncp2y71wr2xy" path="res://scenes/coin.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://dpcm2sp0m7qrw" path="res://scenes/killzone.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://7rt3ptaltd5e" path="res://scenes/slime.tscn" id="6_p57ef"]
+[ext_resource type="FontFile" uid="uid://c7m3nn831so66" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="7_u5sy4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
 texture = ExtResource("2_yqjtg")
@@ -252,3 +253,21 @@ shape = SubResource("WorldBoundaryShape2D_iywne")
 
 [node name="Slime" parent="." unique_id=1556713871 instance=ExtResource("6_p57ef")]
 position = Vector2(110, 99)
+
+[node name="Label" type="Label" parent="." unique_id=587414638]
+offset_left = -100.0
+offset_top = -27.0
+offset_right = 32.0
+offset_bottom = -4.0
+theme_override_fonts/font = ExtResource("7_u5sy4")
+theme_override_font_sizes/font_size = 11
+text = "Space to jump"
+
+[node name="Label2" type="Label" parent="." unique_id=264309540]
+offset_left = 225.0
+offset_top = 46.0
+offset_right = 357.0
+offset_bottom = 69.0
+theme_override_fonts/font = ExtResource("7_u5sy4")
+theme_override_font_sizes/font_size = 11
+text = "Falling hurts"
