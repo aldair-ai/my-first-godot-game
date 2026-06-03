@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://c3vkwoeipnogx"]
 
+[ext_resource type="Script" uid="uid://ckj135n5aa37n" path="res://scripts/game_manager.gd" id="1_gee14"]
 [ext_resource type="PackedScene" uid="uid://b3ulpabg806oy" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://c43u7jyywped" path="res://assets/sprites/world_tileset.png" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://dbi7e4k5gyc0d" path="res://scenes/platform.tscn" id="3_lnu2h"]
@@ -171,6 +172,9 @@ texture = ExtResource("2_yqjtg")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_lnu2h")
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iywne"]
+distance = -27.0
+
 [sub_resource type="Animation" id="Animation_lnu2h"]
 length = 0.001
 tracks/0/type = "value"
@@ -208,17 +212,18 @@ _data = {
 &"move": SubResource("Animation_lbhrr")
 }
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iywne"]
-distance = -27.0
-
 [node name="Game" type="Node2D" unique_id=2073773186]
+
+[node name="GameManager" type="Node" parent="." unique_id=195333950]
+unique_name_in_owner = true
+script = ExtResource("1_gee14")
 
 [node name="Player" parent="." unique_id=820864138 instance=ExtResource("1_uwrxv")]
 position = Vector2(45, 38)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1901876734]
 position = Vector2(0, -7)
-zoom = Vector2(4, 4)
+zoom = Vector2(3, 3)
 limit_top = -9999951
 limit_bottom = 169
 
@@ -227,22 +232,6 @@ limit_bottom = 169
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=431927399]
 tile_map_data = PackedByteArray("AAD9/wUAAAAAAAEAAAD+/wUAAAAAAAEAAAD//wUAAAAAAAEAAAD9/wQAAAAAAAAAAAD+/wQAAAAAAAAAAAD//wQAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAADAAQAAAAAAAAAAAACAAQAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAJAAAAAAAMAAcAAAALAAAAAAALAAcAAAAKAAAAAAANAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAUAAAABAAAAAAABAAUAAAABAAAAAAADAAUAAAABAAAAAAADAAYAAAABAAAAAAACAAYAAAABAAAAAAABAAYAAAABAAAAAAAAAAYAAAABAAAAAAAAAAcAAAABAAAAAAABAAcAAAABAAAAAAACAAcAAAABAAAAAAADAAcAAAABAAAAAAAEAAcAAAAHAAAAAAAFAAcAAAAHAAAAAAAGAAcAAAAHAAAAAAAGAAgAAAAHAAAAAAAEAAgAAAAHAAAAAAAFAAgAAAAHAAAAAAD9/wYAAAAAAAEAAAD9/wcAAAAAAAEAAAD+/wcAAAAAAAEAAAD+/wYAAAAAAAEAAAD//wYAAAAAAAEAAAD//wcAAAAAAAEAAAD9/wgAAAAAAAEAAAD+/wgAAAAAAAEAAAD//wgAAAAAAAEAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAACAAgAAAABAAAAAAADAAgAAAABAAAAAAAHAAgAAAAIAAAAAAAIAAgAAAAIAAAAAAAJAAgAAAAIAAAAAAANAAgAAAAIAAAAAAAOAAgAAAAIAAAAAAAPAAgAAAAIAAAAAAACAAUAAAABAAAAAAANAAYAAAAAAAIAAAAOAAYAAAAAAAIAAAAOAAUAAAAAAAIAAAA=")
 tile_set = SubResource("TileSet_lbhrr")
-
-[node name="Platform" parent="." unique_id=1785505709 instance=ExtResource("3_lnu2h")]
-position = Vector2(-25, 33)
-
-[node name="Platform2" parent="." unique_id=1342900777 instance=ExtResource("3_lnu2h")]
-position = Vector2(276, 116)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Platform2" unique_id=893361745]
-libraries/ = SubResource("AnimationLibrary_iywne")
-autoplay = &"move"
-
-[node name="Coin" parent="." unique_id=1910694308 instance=ExtResource("4_lbhrr")]
-position = Vector2(90, 104)
-
-[node name="Coin2" parent="." unique_id=1741522406 instance=ExtResource("4_lbhrr")]
-position = Vector2(149, 104)
 
 [node name="Killzone" parent="." unique_id=1069208296 instance=ExtResource("5_iywne")]
 position = Vector2(9, 117)
@@ -254,7 +243,17 @@ shape = SubResource("WorldBoundaryShape2D_iywne")
 [node name="Slime" parent="." unique_id=1556713871 instance=ExtResource("6_p57ef")]
 position = Vector2(110, 99)
 
-[node name="Label" type="Label" parent="." unique_id=587414638]
+[node name="Coins" type="Node" parent="." unique_id=1623909867]
+
+[node name="Coin" parent="Coins" unique_id=1910694308 instance=ExtResource("4_lbhrr")]
+position = Vector2(90, 104)
+
+[node name="Coin2" parent="Coins" unique_id=1741522406 instance=ExtResource("4_lbhrr")]
+position = Vector2(149, 104)
+
+[node name="Labels" type="Node" parent="." unique_id=1790693536]
+
+[node name="Label" type="Label" parent="Labels" unique_id=587414638]
 offset_left = -100.0
 offset_top = -27.0
 offset_right = 32.0
@@ -263,7 +262,7 @@ theme_override_fonts/font = ExtResource("7_u5sy4")
 theme_override_font_sizes/font_size = 11
 text = "Space to jump"
 
-[node name="Label2" type="Label" parent="." unique_id=264309540]
+[node name="Label2" type="Label" parent="Labels" unique_id=264309540]
 offset_left = 225.0
 offset_top = 46.0
 offset_right = 357.0
@@ -271,3 +270,15 @@ offset_bottom = 69.0
 theme_override_fonts/font = ExtResource("7_u5sy4")
 theme_override_font_sizes/font_size = 11
 text = "Falling hurts"
+
+[node name="Platforms" type="Node" parent="." unique_id=1561333581]
+
+[node name="Platform" parent="Platforms" unique_id=1785505709 instance=ExtResource("3_lnu2h")]
+position = Vector2(-25, 33)
+
+[node name="Platform2" parent="Platforms" unique_id=1342900777 instance=ExtResource("3_lnu2h")]
+position = Vector2(276, 116)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Platforms/Platform2" unique_id=893361745]
+libraries/ = SubResource("AnimationLibrary_iywne")
+autoplay = &"move"
